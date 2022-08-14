@@ -1,0 +1,25 @@
+name: weather
+description: Weather app for syntax competition made by Aarav Prasad.
+publish_to: 'none'
+version: 1.0.0+1
+environment:
+  sdk: ">=2.17.6 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^3.0.1
+  flutter_svg: ^1.1.3
+  cupertino_icons: ^1.0.5
+  http: ^0.13.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/time/
+    - assets/weather/
+    - assets/data/
