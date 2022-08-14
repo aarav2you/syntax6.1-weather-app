@@ -22,6 +22,9 @@ Icon customIcon = const Icon(
 Widget customSearchBar = const Text('Weather App');
 
 String cityName = "Noida";
+
+final TextEditingController _controller = TextEditingController();
+
 class WeatherApp extends StatefulWidget {
   @override
   State<WeatherApp> createState() => _WeatherAppState();
@@ -33,7 +36,6 @@ String titleCase(String text) {
       .map((word) => word[0].toUpperCase() + word.substring(1))
       .join(' ');
 }
-
 
 class _WeatherAppState extends State<WeatherApp> {
   var temp;
@@ -47,8 +49,12 @@ class _WeatherAppState extends State<WeatherApp> {
 
     city = titleCase(city);
 
-    final cities = await json
+    Map<String, dynamic> cities = await json
         .decode(await rootBundle.loadString('assets/data/cities.json'));
+
+    if (cities.containsKey(city) != true) {
+      return "InvalidCity"; // Throw-catch exceptions not working for some reason
+    }
 
     final cityParameter =
         "forecast?latitude=${cities[city]['lat']}&longitude=${cities[city]['lng']}";
@@ -57,7 +63,6 @@ class _WeatherAppState extends State<WeatherApp> {
         "https://api.open-meteo.com/v1/$cityParameter&current_weather=true&timezone=auto"));
 
     var weatherResult = json.decode(weatherReponse.body);
-    print(weatherResult);
 
     Future getLocalTime(String cityTimeZone) async {
       await tz.initializeTimeZone();
@@ -158,9 +163,21 @@ class _WeatherAppState extends State<WeatherApp> {
                       customIcon = const Icon(Icons.cancel);
                       customSearchBar = ListTile(
                         title: TextField(
+                          controller: _controller,
                           textInputAction: TextInputAction.go,
                           onSubmitted: (value) {
                             cityName = value;
+                            var exception = getWeather(cityName);
+                            if (exception == "InvalidCity") {
+                              print("t");
+                            }
+
+                            // try {
+                            //   getWeather(cityName);
+                            // } on InvalidCity {
+                            //   _controller.text =
+                            //       "Invalid city name! Please do not input any abbreviations and check for any typos.";
+                            // }
                           },
                           decoration: InputDecoration(
                             hintText: 'Type in full name of city...',
@@ -185,69 +202,6 @@ class _WeatherAppState extends State<WeatherApp> {
                 icon: customIcon),
             centerTitle: true,
           ),
-          // appBar: AppBar(
-          //   title: Icon(
-          //     Icons.search,
-          //     size: 30,
-          //     color: Colors.white,
-          //   ),
-          //   backgroundColor: Colors.black38,
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.vertical(
-          //       bottom: Radius.circular(20),
-          //     ),
-          //   ),
-          //   leading: IconButton(
-          //     onPressed: () {
-          //       setState(() {
-          //         if (customIcon.icon == Icons.search) {
-          //           customIcon = const Icon(Icons.cancel);
-          //           customSearchBar = ListTile(
-          //             title: TextField(
-          //               textInputAction: TextInputAction.go,
-          //               //     onChanged: (text) {
-          //               //     print("City Name  is : "+ text);
-          //               // },
-          //               onSubmitted: (value) {
-          //                 cityName = value;
-          //                 print("search cityName ->>>>" + cityName);
-          //               },
-
-          //               decoration: InputDecoration(
-          //                 hintText: 'type in city name...',
-          //                 hintStyle: TextStyle(
-          //                   color: Colors.white,
-          //                   fontSize: 18,
-          //                   fontStyle: FontStyle.italic,
-          //                 ),
-          //                 border: InputBorder.none,
-          //               ),
-          //               style: TextStyle(
-          //                 color: Colors.white,
-          //               ),
-          //             ),
-          //             // title: SelectCityWidget(),
-          //           );
-          //         } else {
-          //           customIcon = const Icon(Icons.search);
-          //           customSearchBar = Text(cityName);
-          //         }
-          //       });
-          //     },
-          //     icon: customIcon,
-          //   ),
-          //   // actions: [
-          //   //   IconButton(
-          //   //     padding: EdgeInsets.only(right: 20),
-          //   //     onPressed: null,
-          //   //     icon: Icon(
-          //   //       Icons.search,
-          //   //       size: 25,
-          //   //       color: Colors.white,
-          //   //     ),
-          //   //   ),
-          //   // ],
-          // ),
           body: Container(
               child: Stack(children: [
             Container(
