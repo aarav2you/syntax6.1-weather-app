@@ -1,16 +1,26 @@
-# weather
 
-A new Flutter project.
+# Weather App
+A simple weather app made in flutter
+![Delhi](https://i.imgur.com/MmFU65d.png)
+![Spokane Valley](https://i.imgur.com/gYA8mnw.png)
+![Tokyo](https://i.imgur.com/QA6KX2Q.png)
 
-## Getting Started
+## Installation
+[Install flutter](https://docs.flutter.dev/get-started/install) for your OS from
+Clone this repository: `git clone https://github.com/aarav2you/syntax6.1-weather-app.git`
+Go into the repository and run it with Cmd/Powershell/Bash:
+```bash
+cd syntax6.1-weather-app
+flutter clean
+flutter pub get
+flutter run -d chrome
+```
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Responsive
+- Search bar for more than 5k+ cities all around the world
+- Temperature
+- Weather
+- Date & Time
+- Simple and clean
