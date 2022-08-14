@@ -9,6 +9,7 @@ A simple weather app made in flutter
 [Install flutter](https://docs.flutter.dev/get-started/install) for your OS
 
 Clone this repository: `git clone https://github.com/aarav2you/syntax6.1-weather-app.git`
+
 Go into the repository and run it with Cmd/Powershell/Bash:
 ```bash
 cd syntax6.1-weather-app
